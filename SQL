@@ -1,0 +1,315 @@
+-- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
+--
+-- Host: localhost    Database: hms_db
+-- ------------------------------------------------------
+-- Server version	8.0.45
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `admission`
+--
+
+DROP TABLE IF EXISTS `admission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admission` (
+  `admission_id` int NOT NULL AUTO_INCREMENT,
+  `patient_id` int NOT NULL,
+  `room_id` int NOT NULL,
+  `admitting_doctor_id` int NOT NULL,
+  `admission_date` timestamp NOT NULL,
+  `discharge_date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`admission_id`),
+  KEY `fk_admission_patient` (`patient_id`),
+  KEY `fk_admission_room` (`room_id`),
+  KEY `fk_admission_doctor` (`admitting_doctor_id`),
+  CONSTRAINT `fk_admission_doctor` FOREIGN KEY (`admitting_doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_admission_patient` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_admission_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `chk_discharge_after_admission` CHECK (((`discharge_date` is null) or (`discharge_date` > `admission_date`)))
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admission`
+--
+
+LOCK TABLES `admission` WRITE;
+/*!40000 ALTER TABLE `admission` DISABLE KEYS */;
+INSERT INTO `admission` VALUES (1,1,1,1,'2026-08-01 07:00:00','2026-08-05 09:00:00'),(2,2,4,1,'2026-08-02 08:30:00','2026-08-06 07:00:00'),(3,3,7,6,'2026-08-03 11:00:00',NULL),(4,4,8,3,'2026-08-04 06:00:00',NULL),(5,5,2,4,'2026-08-05 05:00:00','2026-08-08 12:00:00'),(6,6,5,10,'2026-08-06 13:00:00','2026-08-10 08:00:00'),(7,7,9,11,'2026-08-07 10:00:00','2026-08-09 07:00:00'),(8,8,11,12,'2026-08-08 07:00:00','2026-08-12 11:00:00'),(9,9,13,14,'2026-08-09 12:00:00',NULL),(10,10,16,15,'2026-08-09 23:00:00','2026-08-11 15:00:00'),(11,11,17,2,'2026-08-11 06:00:00','2026-08-14 08:00:00'),(12,12,19,16,'2026-08-12 07:30:00','2026-08-19 09:00:00'),(13,13,21,18,'2026-08-13 08:00:00','2026-08-15 07:00:00'),(14,14,23,19,'2026-08-14 09:00:00',NULL),(15,15,25,20,'2026-08-15 05:30:00','2026-08-20 06:00:00'),(16,16,26,28,'2026-08-16 11:00:00','2026-08-22 10:00:00'),(17,17,28,29,'2026-08-17 14:00:00','2026-08-25 07:00:00'),(18,18,30,32,'2026-08-18 16:00:00','2026-08-21 08:00:00'),(19,19,31,33,'2026-08-19 07:00:00','2026-08-23 12:00:00'),(20,20,33,35,'2026-08-20 01:00:00',NULL),(21,21,35,45,'2026-08-21 03:00:00','2026-08-22 09:00:00'),(22,22,36,34,'2026-08-22 06:00:00','2026-08-28 07:00:00'),(23,23,38,10,'2026-08-23 08:00:00','2026-08-26 11:00:00'),(24,24,40,45,'2026-08-24 10:30:00','2026-08-30 06:00:00'),(25,25,41,1,'2026-08-25 12:00:00',NULL),(26,26,43,3,'2026-08-26 07:00:00','2026-08-29 08:00:00'),(27,27,45,12,'2026-08-27 05:00:00','2026-08-31 13:00:00'),(28,28,46,14,'2026-08-28 09:00:00',NULL),(29,29,48,3,'2026-08-29 11:00:00','2026-09-02 07:00:00'),(30,30,49,12,'2026-08-30 15:00:00','2026-09-01 09:00:00'),(31,31,3,6,'2026-08-31 06:00:00',NULL),(32,32,6,7,'2026-09-01 07:00:00','2026-09-03 12:00:00'),(33,33,10,8,'2026-09-01 08:00:00','2026-09-04 08:00:00'),(34,34,12,9,'2026-09-02 09:00:00','2026-09-05 07:00:00'),(35,35,14,11,'2026-09-02 10:00:00',NULL),(36,36,15,13,'2026-09-03 11:00:00','2026-09-08 09:00:00'),(37,37,18,17,'2026-09-03 12:00:00','2026-09-06 11:00:00'),(38,38,20,21,'2026-09-04 13:00:00',NULL),(39,39,22,24,'2026-09-04 14:00:00','2026-09-10 07:00:00'),(40,40,24,25,'2026-09-05 05:00:00','2026-09-07 08:00:00'),(41,41,27,28,'2026-09-05 06:00:00',NULL),(42,42,29,30,'2026-09-06 07:00:00','2026-09-09 10:00:00'),(43,43,32,32,'2026-09-06 08:00:00','2026-09-11 09:00:00'),(44,44,34,36,'2026-09-07 09:00:00',NULL),(45,45,37,37,'2026-09-07 10:00:00','2026-09-10 13:00:00'),(46,46,39,40,'2026-09-08 11:00:00','2026-09-12 08:00:00'),(47,47,42,41,'2026-09-08 12:00:00',NULL),(48,48,44,43,'2026-09-09 13:00:00','2026-09-13 07:00:00'),(49,49,47,46,'2026-09-09 14:00:00','2026-09-14 12:00:00'),(50,50,50,49,'2026-09-10 05:00:00',NULL);
+/*!40000 ALTER TABLE `admission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `appointment`
+--
+
+DROP TABLE IF EXISTS `appointment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `appointment` (
+  `appointment_id` int NOT NULL AUTO_INCREMENT,
+  `patient_id` int NOT NULL,
+  `doctor_id` int NOT NULL,
+  `appointment_date` timestamp NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'Scheduled',
+  PRIMARY KEY (`appointment_id`),
+  UNIQUE KEY `uq_doctor_slot` (`doctor_id`,`appointment_date`),
+  KEY `fk_appt_patient` (`patient_id`),
+  CONSTRAINT `fk_appt_doctor` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_appt_patient` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `appointment_chk_1` CHECK ((`status` in (_utf8mb4'Scheduled',_utf8mb4'Completed',_utf8mb4'Cancelled',_utf8mb4'No-Show')))
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appointment`
+--
+
+LOCK TABLES `appointment` WRITE;
+/*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
+INSERT INTO `appointment` VALUES (1,1,1,'2026-09-01 06:00:00','Cancelled'),(2,2,1,'2026-09-01 07:00:00','Completed'),(3,3,2,'2026-09-01 06:30:00','Completed'),(4,4,4,'2026-09-01 08:00:00','Completed'),(5,5,3,'2026-09-02 05:30:00','Cancelled'),(6,6,5,'2026-09-02 07:00:00','Scheduled'),(7,7,6,'2026-09-02 08:30:00','Scheduled'),(8,8,7,'2026-09-03 06:00:00','Scheduled'),(9,9,8,'2026-09-03 07:00:00','Cancelled'),(10,10,9,'2026-09-03 08:00:00','No-Show'),(11,11,10,'2026-09-04 06:00:00','Completed'),(12,12,11,'2026-09-04 07:00:00','Completed'),(13,13,12,'2026-09-04 08:00:00','Completed'),(14,14,13,'2026-09-05 06:00:00','Scheduled'),(15,15,14,'2026-09-05 07:00:00','Scheduled'),(16,16,15,'2026-09-05 08:00:00','Completed'),(17,17,16,'2026-09-06 06:00:00','Scheduled'),(18,18,17,'2026-09-06 07:00:00','Scheduled'),(19,19,18,'2026-09-06 08:00:00','Completed'),(20,20,19,'2026-09-07 06:00:00','Scheduled'),(21,21,20,'2026-09-07 07:00:00','Completed'),(22,22,21,'2026-09-07 08:00:00','Scheduled'),(23,23,22,'2026-09-08 06:00:00','Cancelled'),(24,24,23,'2026-09-08 07:00:00','Completed'),(25,25,24,'2026-09-08 08:00:00','Scheduled'),(26,26,25,'2026-09-09 06:00:00','Scheduled'),(27,27,27,'2026-09-09 07:00:00','Scheduled'),(28,28,28,'2026-09-09 08:00:00','Completed'),(29,29,29,'2026-09-10 06:00:00','Scheduled'),(30,30,30,'2026-09-10 07:00:00','No-Show'),(31,31,31,'2026-09-10 08:00:00','Completed'),(32,32,32,'2026-09-11 06:00:00','Scheduled'),(33,33,33,'2026-09-11 07:00:00','Scheduled'),(34,34,34,'2026-09-11 08:00:00','Completed'),(35,35,35,'2026-09-12 06:00:00','Scheduled'),(36,36,36,'2026-09-12 07:00:00','Scheduled'),(37,37,37,'2026-09-12 08:00:00','Completed'),(38,38,38,'2026-09-13 06:00:00','Scheduled'),(39,39,39,'2026-09-13 07:00:00','Scheduled'),(40,40,40,'2026-09-13 08:00:00','Completed'),(41,41,41,'2026-09-14 06:00:00','Scheduled'),(42,42,42,'2026-09-14 07:00:00','Scheduled'),(43,43,43,'2026-09-14 08:00:00','Completed'),(44,44,44,'2026-09-15 06:00:00','Scheduled'),(45,45,45,'2026-09-15 07:00:00','Completed'),(46,46,47,'2026-09-15 08:00:00','Scheduled'),(47,47,48,'2026-09-16 06:00:00','Scheduled'),(48,48,49,'2026-09-16 07:00:00','Completed'),(49,49,50,'2026-09-16 08:00:00','Scheduled'),(50,50,1,'2026-09-17 06:00:00','Scheduled');
+/*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `department`
+--
+
+DROP TABLE IF EXISTS `department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `department` (
+  `department_id` int NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(100) NOT NULL,
+  `location` varchar(100) NOT NULL,
+  `head_doctor_id` int DEFAULT NULL,
+  PRIMARY KEY (`department_id`),
+  UNIQUE KEY `department_name` (`department_name`),
+  KEY `fk_department_head_doctor` (`head_doctor_id`),
+  CONSTRAINT `fk_department_head_doctor` FOREIGN KEY (`head_doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `department`
+--
+
+LOCK TABLES `department` WRITE;
+/*!40000 ALTER TABLE `department` DISABLE KEYS */;
+INSERT INTO `department` VALUES (1,'Cardiology','Building A - Floor 2',1),(2,'Pediatrics','Building B - Floor 1',2),(3,'Orthopedics','Building A - Floor 3',3),(4,'Internal Medicine','Building C - Floor 1',4),(5,'Radiology','Building B - Basement',5),(6,'Neurology','Building A - Floor 4',6),(7,'Dermatology','Building C - Floor 2',7),(8,'Ophthalmology','Building C - Floor 3',8),(9,'ENT (Ear, Nose, Throat)','Building B - Floor 2',9),(10,'General Surgery','Building A - Floor 5',10),(11,'Urology','Building A - Floor 3',11),(12,'Obstetrics & Gynecology','Building B - Floor 3',12),(13,'Psychiatry','Building D - Floor 1',13),(14,'Oncology','Building D - Floor 2',14),(15,'Emergency Medicine','Building E - Ground Floor',15),(16,'Pulmonology','Building C - Floor 4',16),(17,'Gastroenterology','Building C - Floor 2',17),(18,'Endocrinology','Building C - Floor 1',18),(19,'Nephrology','Building A - Floor 4',19),(20,'Hematology','Building D - Floor 3',20),(21,'Rheumatology','Building C - Floor 3',21),(22,'Anesthesiology','Building A - Operating Block',22),(23,'Pathology','Building B - Basement Lab',23),(24,'Physical Therapy','Building F - Gym Center',24),(25,'Plastic Surgery','Building C - Floor 5',25),(26,'Vascular Surgery','Building A - Floor 5',26),(27,'Pediatric Surgery','Building B - Floor 4',27),(28,'Neurosurgery','Building A - Floor 6',28),(29,'Cardiothoracic Surgery','Building A - Floor 6',29),(30,'Allergy & Immunology','Building C - Floor 1',30),(31,'Nuclear Medicine','Building B - Basement 2',31),(32,'Infectious Diseases','Building D - Floor 4',32),(33,'Geriatrics','Building D - Floor 1',33),(34,'Neonatology','Building B - ICU Wing',34),(35,'ICU & Critical Care','Building A - ICU Floor',35),(36,'Sports Medicine','Building F - Gym Center',36),(37,'Pain Management','Building C - Floor 4',37),(38,'Clinical Nutrition','Building C - Ground Floor',38),(39,'Audiology','Building B - Floor 2',39),(40,'Maxillofacial Surgery','Building C - Floor 5',40),(41,'Dental Surgery','Building C - Floor 5',41),(42,'Occupational Medicine','Building D - Ground Floor',42),(43,'Palliative Care','Building D - Floor 2',43),(44,'Medical Genetics','Building D - Lab Block',44),(45,'Trauma Center','Building E - Ground Floor',45),(46,'Bariatric Surgery','Building A - Floor 5',46),(47,'Pediatric Cardiology','Building B - Floor 3',47),(48,'Pediatric Neurology','Building B - Floor 4',48),(49,'Hepatology','Building C - Floor 2',49),(50,'Clinical Immunology','Building D - Lab Block',50);
+/*!40000 ALTER TABLE `department` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctor`
+--
+
+DROP TABLE IF EXISTS `doctor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `doctor` (
+  `doctor_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `national_id` varchar(20) NOT NULL,
+  `specialization` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'Active',
+  `department_id` int NOT NULL,
+  PRIMARY KEY (`doctor_id`),
+  UNIQUE KEY `national_id` (`national_id`),
+  UNIQUE KEY `phone` (`phone`),
+  UNIQUE KEY `email` (`email`),
+  KEY `fk_doctor_department` (`department_id`),
+  CONSTRAINT `fk_doctor_department` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `doctor_chk_1` CHECK ((`status` in (_utf8mb4'Active',_utf8mb4'Inactive',_utf8mb4'On Leave')))
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctor`
+--
+
+LOCK TABLES `doctor` WRITE;
+/*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
+INSERT INTO `doctor` VALUES (1,'Dr. Faisal Al-Otaibi','1010000001','Cardiologist','0500000001','faisal.otaibi@hms.com','Active',1),(2,'Dr. Sara Al-Ghamdi','1010000002','Pediatrician','0500000002','sara.ghamdi@hms.com','Active',2),(3,'Dr. Khalid Al-Zahrani','1010000003','Orthopedic Surgeon','0500000003','khalid.zahrani@hms.com','Active',3),(4,'Dr. Mona Al-Qahtani','1010000004','Internal Specialist','0500000004','mona.qahtani@hms.com','Active',4),(5,'Dr. Omar Al-Shehri','1010000005','Radiologist','0500000005','omar.shehri@hms.com','Active',5),(6,'Dr. Yasser Al-Harbi','1010000006','Neurologist','0500000006','yasser.harbi@hms.com','Active',6),(7,'Dr. Reem Al-Dossary','1010000007','Dermatologist','0500000007','reem.dossary@hms.com','Active',7),(8,'Dr. Tariq Al-Mutairi','1010000008','Ophthalmologist','0500000008','tariq.mutairi@hms.com','Active',8),(9,'Dr. Huda Al-Anazi','1010000009','ENT Specialist','0500000009','huda.anazi@hms.com','Active',9),(10,'Dr. Sultan Al-Suleiman','1010000010','General Surgeon','0500000010','sultan.suleiman@hms.com','Active',10),(11,'Dr. Waleed Al-Malki','1010000011','Urologist','0500000011','waleed.malki@hms.com','Active',11),(12,'Dr. Noura Al-Harthi','1010000012','Gynecologist','0500000012','noura.harthi@hms.com','Active',12),(13,'Dr. Fahad Al-Bishi','1010000013','Psychiatrist','0500000013','fahad.bishi@hms.com','Active',13),(14,'Dr. Amal Al-Ahmadi','1010000014','Oncologist','0500000014','amal.ahmadi@hms.com','Active',14),(15,'Dr. Bader Al-Subaie','1010000015','Emergency Physician','0500000015','bader.subaie@hms.com','Active',15),(16,'Dr. Majed Al-Ruwaili','1010000016','Pulmonologist','0500000016','majed.ruwaili@hms.com','Active',16),(17,'Dr. Latifa Al-Kahlani','1010000017','Gastroenterologist','0500000017','latifa.kahlani@hms.com','Active',17),(18,'Dr. Hassan Al-Nomani','1010000018','Endocrinologist','0500000018','hassan.nomani@hms.com','Active',18),(19,'Dr. Areej Al-Ghamdi','1010000019','Nephrologist','0500000019','areej.ghamdi@hms.com','Active',19),(20,'Dr. Ibrahim Al-Khaled','1010000020','Hematologist','0500000020','ibrahim.khaled@hms.com','Active',20),(21,'Dr. Hind Al-Sharif','1010000021','Rheumatologist','0500000021','hind.sharif@hms.com','Active',21),(22,'Dr. Mansour Al-Zamel','1010000022','Anesthesiologist','0500000022','mansour.zamel@hms.com','Active',22),(23,'Dr. Zainab Al-Hassan','1010000023','Pathologist','0500000023','zainab.hassan@hms.com','Active',23),(24,'Dr. Hamad Al-Suwailem','1010000024','Physiotherapist','0500000024','hamad.suwailem@hms.com','Active',24),(25,'Dr. Lujain Al-Saud','1010000025','Plastic Surgeon','0500000025','lujain.saud@hms.com','Active',25),(26,'Dr. Bandar Al-Rashed','1010000026','Vascular Surgeon','0500000026','bandar.rashed@hms.com','On Leave',26),(27,'Dr. Kholoud Al-Majed','1010000027','Pediatric Surgeon','0500000027','kholoud.majed@hms.com','Active',27),(28,'Dr. Turki Al-Fahad','1010000028','Neurosurgeon','0500000028','turki.fahad@hms.com','Active',28),(29,'Dr. Layla Al-Omari','1010000029','Cardiac Surgeon','0500000029','layla.omari@hms.com','Active',29),(30,'Dr. Naif Al-Shammari','1010000030','Immunologist','0500000030','naif.shammari@hms.com','Active',30),(31,'Dr. Hanan Al-Khatib','1010000031','Nuclear Specialist','0500000031','hanan.khatib@hms.com','Active',31),(32,'Dr. Meshal Al-Dhfeeri','1010000032','Infectious Disease Doctor','0500000032','meshal.dhfeeri@hms.com','Active',32),(33,'Dr. Rania Al-Ghamdi','1010000033','Geriatrician','0500000033','rania.ghamdi@hms.com','Active',33),(34,'Dr. Sami Al-Thubaiti','1010000034','Neonatologist','0500000034','sami.thubaiti@hms.com','Active',34),(35,'Dr. Asma Al-Ghamdi','1010000035','ICU Specialist','0500000035','asma.ghamdi@hms.com','Active',35),(36,'Dr. Ziyad Al-Ghamdi','1010000036','Sports Physician','0500000036','ziyad.ghamdi@hms.com','Active',36),(37,'Dr. Dina Al-Salem','1010000037','Pain Specialist','0500000037','dina.salem@hms.com','Active',37),(38,'Dr. Rakan Al-Ghamdi','1010000038','Nutrition Consultant','0500000038','rakan.ghamdi@hms.com','Active',38),(39,'Dr. Maha Al-Otaibi','1010000039','Audiologist','0500000039','maha.otaibi@hms.com','Active',39),(40,'Dr. Youssef Al-Enezi','1010000040','Maxillofacial Surgeon','0500000040','youssef.enezi@hms.com','Active',40),(41,'Dr. Maryam Al-Malki','1010000041','Dentist','0500000041','maryam.malki@hms.com','Active',41),(42,'Dr. Saad Al-Ghamdi','1010000042','Occupational Doctor','0500000042','saad.ghamdi@hms.com','Active',42),(43,'Dr. Salma Al-Dosari','1010000043','Palliative Specialist','0500000043','salma.dosari@hms.com','Active',43),(44,'Dr. Nader Al-Hussain','1010000044','Geneticist','0500000044','nader.hussain@hms.com','Active',44),(45,'Dr. Basma Al-Shehri','1010000045','Trauma Specialist','0500000045','basma.shehri@hms.com','Active',45),(46,'Dr. Hatem Al-Zahrani','1010000046','Bariatric Surgeon','0500000046','hatem.zahrani@hms.com','Inactive',46),(47,'Dr. Manal Al-Qahtani','1010000047','Pediatric Cardiologist','0500000047','manal.qahtani@hms.com','Active',47),(48,'Dr. Rayan Al-Harbi','1010000048','Pediatric Neurologist','0500000048','rayan.harbi@hms.com','Active',48),(49,'Dr. Siham Al-Mutairi','1010000049','Hepatologist','0500000049','siham.mutairi@hms.com','Active',49),(50,'Dr. Anmar Al-Ghamdi','1010000050','Immunologist','0500000050','anmar.ghamdi@hms.com','Active',50);
+/*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `medication`
+--
+
+DROP TABLE IF EXISTS `medication`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `medication` (
+  `medication_id` int NOT NULL AUTO_INCREMENT,
+  `medication_name` varchar(100) NOT NULL,
+  `dosage` varchar(50) NOT NULL,
+  `manufacturer` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`medication_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medication`
+--
+
+LOCK TABLES `medication` WRITE;
+/*!40000 ALTER TABLE `medication` DISABLE KEYS */;
+INSERT INTO `medication` VALUES (1,'Atorvastatin','20mg','Pfizer'),(2,'Losartan','50mg','Merck'),(3,'Paracetamol','500mg','Spimaco'),(4,'Amoxicillin','500mg','GSK'),(5,'Ibuprofen','400mg','Novartis'),(6,'Metformin','850mg','Sanofi'),(7,'Amlodipine','5mg','Pfizer'),(8,'Omeprazole','20mg','AstraZeneca'),(9,'Aspirin','100mg','Bayer'),(10,'Pantoprazole','40mg','Takeda'),(11,'Simbastatin','10mg','Merck'),(12,'Ciprofloxacin','500mg','Bayer'),(13,'Azithromycin','250mg','Pfizer'),(14,'Levothyroxine','50mcg','AbbVie'),(15,'Lisinopril','10mg','AstraZeneca'),(16,'Metoprolol','50mg','Novartis'),(17,'Clopidogrel','75mg','Sanofi'),(18,'Rosuvastatin','10mg','AstraZeneca'),(19,'Gabapentin','300mg','Pfizer'),(20,'Prednisone','5mg','Horizon'),(21,'Tramadol','50mg','Grünenthal'),(22,'Diclofenac Sodium','50mg','Novartis'),(23,'Cetirizine','10mg','UCB'),(24,'Loratadine','10mg','Bayer'),(25,'Montelukast','10mg','Merck'),(26,'Salbutamol Inhaler','100mcg','GSK'),(27,'Hydrochlorothiazide','25mg','Novartis'),(28,'Furosemide','40mg','Sanofi'),(29,'Spironolactone','25mg','Pfizer'),(30,'Glimepiride','2mg','Sanofi'),(31,'Sitagliptin','100mg','Merck'),(32,'Empagliflozin','10mg','Boehringer'),(33,'Insulin Glargine','100IU/ml','Sanofi'),(34,'Esomeprazole','40mg','AstraZeneca'),(35,'Domperidone','10mg','Janssen'),(36,'Metoclopramide','10mg','Sanofi'),(37,'Ondansetron','4mg','GSK'),(38,'Pregabalin','75mg','Pfizer'),(39,'Escitalopram','10mg','Lundbeck'),(40,'Sertraline','50mg','Pfizer'),(41,'Alprazolam','0.25mg','Pfizer'),(42,'Diazepam','5mg','Roche'),(43,'Meloxicam','15mg','Boehringer'),(44,'Celecoxib','200mg','Pfizer'),(45,'Allopurinol','100mg','GSK'),(46,'Warfarin','2mg','Bristol Myers'),(47,'Rivaroxaban','15mg','Bayer'),(48,'Bisoprolol','5mg','Merck'),(49,'Valsartan','80mg','Novartis'),(50,'Enalapril','5mg','Merck');
+/*!40000 ALTER TABLE `medication` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patient`
+--
+
+DROP TABLE IF EXISTS `patient`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `patient` (
+  `patient_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `national_id` varchar(20) NOT NULL,
+  `date_of_birth` date NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`patient_id`),
+  UNIQUE KEY `national_id` (`national_id`),
+  UNIQUE KEY `phone` (`phone`),
+  UNIQUE KEY `email` (`email`),
+  CONSTRAINT `patient_chk_1` CHECK ((`gender` in (_utf8mb4'Male',_utf8mb4'Female')))
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patient`
+--
+
+LOCK TABLES `patient` WRITE;
+/*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+INSERT INTO `patient` VALUES (1,'Abdullah Al-Anazi','1020000001','1985-05-12','Male','0550000001','abdullah.anazi@gmail.com'),(2,'Fatimah Al-Subaie','1020000002','1992-08-22','Female','0550000002','fatimah.subaie@gmail.com'),(3,'Noura Al-Amri','1020000003','1978-01-15','Female','0550000003','noura.amri@gmail.com'),(4,'Saad Al-Mutairi','1020000004','1990-11-04','Male','0550000004','saad.mutairi@gmail.com'),(5,'Mohammed Al-Dosari','1020000005','1983-03-30','Male','0550000005','mohammed.dosari@gmail.com'),(6,'Aisha Al-Ghamdi','1020000006','1995-07-18','Female','0550000006','aisha.ghamdi@gmail.com'),(7,'Ali Al-Zahrani','1020000007','1970-12-01','Male','0550000007','ali.zahrani@gmail.com'),(8,'Mona Al-Shehri','1020000008','1988-04-25','Female','0550000008','mona.shehri@gmail.com'),(9,'Hassan Al-Harbi','1020000009','1999-09-09','Male','0550000009','hassan.harbi@gmail.com'),(10,'Reem Al-Qahtani','1020000010','2001-02-14','Female','0550000010','reem.qahtani@gmail.com'),(11,'Khaled Al-Otaibi','1020000011','1980-06-19','Male','0550000011','khaled.otaibi@gmail.com'),(12,'Huda Al-Malki','1020000012','1993-10-10','Female','0550000012','huda.malki@gmail.com'),(13,'Sultan Al-Harthi','1020000013','1975-05-05','Male','0550000013','sultan.harthi@gmail.com'),(14,'Amal Al-Bishi','1020000014','1987-08-30','Female','0550000014','amal.bishi@gmail.com'),(15,'Bader Al-Ahmadi','1020000015','1996-01-20','Male','0550000015','bader.ahmadi@gmail.com'),(16,'Nouf Al-Ruwaili','1020000016','1989-03-15','Female','0550000016','nouf.ruwaili@gmail.com'),(17,'Youssef Al-Suleiman','1020000017','1968-11-28','Male','0550000017','youssef.suleiman@gmail.com'),(18,'Latifa Al-Nomani','1020000018','1991-07-07','Female','0550000018','latifa.nomani@gmail.com'),(19,'Ibrahim Al-Sharif','1020000019','1982-04-12','Male','0550000019','ibrahim.sharif@gmail.com'),(20,'Sarah Al-Khaled','1020000020','1998-12-25','Female','0550000020','sarah.khaled@gmail.com'),(21,'Hamad Al-Suwailem','1020000021','1973-02-18','Male','0550000021','hamad.suwailem@gmail.com'),(22,'Lujain Al-Rashed','1020000022','2000-05-14','Female','0550000022','lujain.rashed@gmail.com'),(23,'Turki Al-Majed','1020000023','1984-09-03','Male','0550000023','turki.majed@gmail.com'),(24,'Kholoud Al-Fahad','1020000024','1994-06-21','Female','0550000024','kholoud.fahad@gmail.com'),(25,'Bandar Al-Omari','1020000025','1979-10-11','Male','0550000025','bandar.omari@gmail.com'),(26,'Layla Al-Shammari','1020000026','1986-01-08','Female','0550000026','layla.shammari@gmail.com'),(27,'Naif Al-Khatib','1020000027','1997-08-16','Male','0550000027','naif.khatib@gmail.com'),(28,'Hanan Al-Dhfeeri','1020000028','1990-03-24','Female','0550000028','hanan.dhfeeri@gmail.com'),(29,'Meshal Al-Thubaiti','1020000029','1981-12-05','Male','0550000029','meshal.thubaiti@gmail.com'),(30,'Asma Al-Salem','1020000030','1995-04-19','Female','0550000030','asma.salem@gmail.com'),(31,'Ziyad Al-Enezi','1020000031','1976-07-29','Male','0550000031','ziyad.enezi@gmail.com'),(32,'Dina Al-Hussain','1020000032','2002-02-02','Female','0550000032','dina.hussain@gmail.com'),(33,'Rakan Al-Shehri','1020000033','1988-11-17','Male','0550000033','rakan.shehri@gmail.com'),(34,'Maha Al-Zahrani','1020000034','1993-05-23','Female','0550000034','maha.zahrani@gmail.com'),(35,'Youssef Al-Harbi','1020000035','1985-09-14','Male','0550000035','youssef.harbi@gmail.com'),(36,'Maryam Al-Otaibi','1020000036','1999-10-31','Female','0550000036','maryam.otaibi@gmail.com'),(37,'Saad Al-Qahtani','1020000037','1972-01-03','Male','0550000037','saad.qahtani@gmail.com'),(38,'Salma Al-Malki','1020000038','1989-06-12','Female','0550000038','salma.malki@gmail.com'),(39,'Nader Al-Dosari','1020000039','1996-08-08','Male','0550000039','nader.dosari@gmail.com'),(40,'Basma Al-Ghamdi','1020000040','1991-03-27','Female','0550000040','basma.ghamdi@gmail.com'),(41,'Hatem Al-Anazi','1020000041','1983-12-19','Male','0550000041','hatem.anazi@gmail.com'),(42,'Manal Al-Subaie','1020000042','1997-04-05','Female','0550000042','manal.subaie@gmail.com'),(43,'Rayan Al-Mutairi','1020000043','1977-07-11','Male','0550000043','rayan.mutairi@gmail.com'),(44,'Siham Al-Amri','1020000044','1994-09-26','Female','0550000044','siham.amri@gmail.com'),(45,'Anmar Al-Dosari','1020000045','2000-01-14','Male','0550000045','anmar.dosari@gmail.com'),(46,'Wafa Al-Shehri','1020000046','1986-10-02','Female','0550000046','wafa.shehri@gmail.com'),(47,'Fahad Al-Zahrani','1020000047','1992-05-17','Male','0550000047','fahad.zahrani@gmail.com'),(48,'Ghada Al-Qahtani','1020000048','1981-11-22','Female','0550000048','ghada.qahtani@gmail.com'),(49,'Bander Al-Harbi','1020000049','1995-02-09','Male','0550000049','bander.harbi@gmail.com'),(50,'Laila Al-Otaibi','1020000050','1988-08-14','Female','0550000050','laila.otaibi@gmail.com');
+/*!40000 ALTER TABLE `patient` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prescription`
+--
+
+DROP TABLE IF EXISTS `prescription`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `prescription` (
+  `prescription_id` int NOT NULL AUTO_INCREMENT,
+  `patient_id` int NOT NULL,
+  `doctor_id` int NOT NULL,
+  `appointment_id` int NOT NULL,
+  `prescription_date` date NOT NULL,
+  PRIMARY KEY (`prescription_id`),
+  KEY `fk_prescription_patient` (`patient_id`),
+  KEY `fk_prescription_doctor` (`doctor_id`),
+  KEY `fk_prescription_appointment` (`appointment_id`),
+  CONSTRAINT `fk_prescription_appointment` FOREIGN KEY (`appointment_id`) REFERENCES `appointment` (`appointment_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_prescription_doctor` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_prescription_patient` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prescription`
+--
+
+LOCK TABLES `prescription` WRITE;
+/*!40000 ALTER TABLE `prescription` DISABLE KEYS */;
+INSERT INTO `prescription` VALUES (1,1,1,1,'2026-09-01'),(2,2,1,2,'2026-09-01'),(3,3,2,3,'2026-09-01'),(4,4,4,4,'2026-09-01'),(5,11,10,11,'2026-09-04'),(6,12,11,12,'2026-09-04'),(7,13,12,13,'2026-09-04'),(8,16,15,16,'2026-09-05'),(9,19,18,19,'2026-09-06'),(10,21,20,21,'2026-09-07'),(11,24,23,24,'2026-09-08'),(12,28,28,28,'2026-09-09'),(13,31,31,31,'2026-09-10'),(14,34,34,34,'2026-09-11'),(15,37,37,37,'2026-09-12'),(16,40,40,40,'2026-09-13'),(17,43,43,43,'2026-09-14'),(18,45,45,45,'2026-09-15'),(19,48,49,48,'2026-09-16'),(20,1,1,1,'2026-09-01'),(21,2,1,2,'2026-09-01'),(22,3,2,3,'2026-09-01'),(23,4,4,4,'2026-09-01'),(24,11,10,11,'2026-09-04'),(25,12,11,12,'2026-09-04'),(26,13,12,13,'2026-09-04'),(27,16,15,16,'2026-09-05'),(28,19,18,19,'2026-09-06'),(29,21,20,21,'2026-09-07'),(30,24,23,24,'2026-09-08'),(31,28,28,28,'2026-09-09'),(32,31,31,31,'2026-09-10'),(33,34,34,34,'2026-09-11'),(34,37,37,37,'2026-09-12'),(35,40,40,40,'2026-09-13'),(36,43,43,43,'2026-09-14'),(37,45,45,45,'2026-09-15'),(38,48,49,48,'2026-09-16'),(39,1,1,1,'2026-09-01'),(40,2,1,2,'2026-09-01'),(41,3,2,3,'2026-09-01'),(42,4,4,4,'2026-09-01'),(43,11,10,11,'2026-09-04'),(44,12,11,12,'2026-09-04'),(45,13,12,13,'2026-09-04'),(46,16,15,16,'2026-09-05'),(47,19,18,19,'2026-09-06'),(48,21,20,21,'2026-09-07'),(49,24,23,24,'2026-09-08'),(50,28,28,28,'2026-09-09');
+/*!40000 ALTER TABLE `prescription` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prescription_medication`
+--
+
+DROP TABLE IF EXISTS `prescription_medication`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `prescription_medication` (
+  `prescription_id` int NOT NULL,
+  `medication_id` int NOT NULL,
+  `dosage` varchar(50) NOT NULL,
+  `frequency` varchar(50) NOT NULL,
+  `duration_days` int NOT NULL,
+  `quantity` int NOT NULL,
+  `instructions` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`prescription_id`,`medication_id`),
+  KEY `fk_pm_medication` (`medication_id`),
+  CONSTRAINT `fk_pm_medication` FOREIGN KEY (`medication_id`) REFERENCES `medication` (`medication_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_pm_prescription` FOREIGN KEY (`prescription_id`) REFERENCES `prescription` (`prescription_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `prescription_medication_chk_1` CHECK ((`duration_days` > 0)),
+  CONSTRAINT `prescription_medication_chk_2` CHECK ((`quantity` > 0))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prescription_medication`
+--
+
+LOCK TABLES `prescription_medication` WRITE;
+/*!40000 ALTER TABLE `prescription_medication` DISABLE KEYS */;
+INSERT INTO `prescription_medication` VALUES (1,1,'20mg','Once daily',30,30,'Take after dinner'),(1,2,'50mg','Once daily',30,30,'Take in the morning'),(2,3,'500mg','Every 6 hours',5,20,'Take as needed for pain'),(3,4,'500mg','Every 8 hours',7,21,'Complete the full course'),(4,5,'400mg','Every 8 hours',5,15,'Take after food'),(5,6,'850mg','Twice daily',30,60,'Take with meals'),(6,7,'5mg','Once daily',30,30,'Take in the morning'),(7,8,'20mg','Once daily',14,14,'Take before breakfast'),(8,9,'100mg','Once daily',30,30,'Take after lunch'),(9,10,'40mg','Once daily',14,14,'Take before meal'),(10,11,'10mg','Once daily at night',30,30,'Take at bedtime'),(11,12,'500mg','Twice daily',10,20,'Drink plenty of water'),(12,13,'250mg','Once daily',6,6,'Take on empty stomach'),(13,14,'50mcg','Once daily',30,30,'Take 30 min before breakfast'),(14,15,'10mg','Once daily',30,30,'Monitor blood pressure'),(15,16,'50mg','Twice daily',30,60,'Take with water'),(16,17,'75mg','Once daily',30,30,'Take same time every day'),(17,18,'10mg','Once daily',30,30,'Take at night'),(18,19,'300mg','Three times daily',15,45,'May cause drowsiness'),(19,20,'5mg','Once daily',7,7,'Take in the morning'),(20,21,'50mg','Every 8 hours',3,9,'Take for severe pain'),(21,22,'50mg','Twice daily',5,10,'Take after food'),(22,23,'10mg','Once daily',10,10,'Take at bedtime'),(23,24,'10mg','Once daily',10,10,'Take in the morning'),(24,25,'10mg','Once daily',30,30,'Take in the evening'),(25,26,'100mcg','As needed',30,1,'Inhale 2 puffs when needed'),(26,27,'25mg','Once daily',30,30,'Take in the morning'),(27,28,'40mg','Once daily',15,15,'Take in the morning'),(28,29,'25mg','Once daily',30,30,'Take with food'),(29,30,'2mg','Once daily',30,30,'Take with breakfast'),(30,31,'100mg','Once daily',30,30,'Take with or without food'),(31,32,'10mg','Once daily',30,30,'Take in the morning'),(32,33,'100IU/ml','Once daily at night',30,1,'Inject subcutaneously'),(33,34,'40mg','Once daily',14,14,'Take before breakfast'),(34,35,'10mg','Three times daily',7,21,'Take before meals'),(35,36,'10mg','Three times daily',5,15,'Take 30 min before meals'),(36,37,'4mg','Twice daily',3,6,'Take as needed for nausea'),(37,38,'75mg','Twice daily',30,60,'Take morning and night'),(38,39,'10mg','Once daily',30,30,'Take in the morning'),(39,40,'50mg','Once daily',30,30,'Take in the morning'),(40,41,'0.25mg','As needed',7,14,'Take strictly as directed'),(41,42,'5mg','Once daily at night',5,5,'May cause drowsiness'),(42,43,'15mg','Once daily',10,10,'Take with food'),(43,44,'200mg','Once daily',10,10,'Take after meals'),(44,45,'100mg','Once daily',30,30,'Drink plenty of fluids'),(45,46,'2mg','Once daily',30,30,'Take as per INR test result'),(46,47,'15mg','Once daily',30,30,'Take with food'),(47,48,'5mg','Once daily',30,30,'Take in the morning'),(48,49,'80mg','Once daily',30,30,'Take at the same time daily'),(49,50,'5mg','Once daily',30,30,'Take in the morning'),(50,1,'20mg','Once daily',30,30,'Take after dinner');
+/*!40000 ALTER TABLE `prescription_medication` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `room`
+--
+
+DROP TABLE IF EXISTS `room`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `room` (
+  `room_id` int NOT NULL AUTO_INCREMENT,
+  `room_number` varchar(20) NOT NULL,
+  `room_type` varchar(50) NOT NULL,
+  `capacity` int NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'Available',
+  PRIMARY KEY (`room_id`),
+  UNIQUE KEY `room_number` (`room_number`),
+  CONSTRAINT `room_chk_1` CHECK ((`capacity` > 0)),
+  CONSTRAINT `room_chk_2` CHECK ((`status` in (_utf8mb4'Available',_utf8mb4'Full',_utf8mb4'Maintenance')))
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room`
+--
+
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES (1,'R101','General Ward',4,'Available'),(2,'R102','General Ward',4,'Available'),(3,'R103','General Ward',4,'Full'),(4,'R104','Private Room',1,'Available'),(5,'R105','Private Room',1,'Available'),(6,'R106','VIP Suite',1,'Available'),(7,'R107','ICU',2,'Available'),(8,'R108','ICU',2,'Full'),(9,'R109','Semi-Private',2,'Available'),(10,'R110','Semi-Private',2,'Maintenance'),(11,'R201','General Ward',4,'Available'),(12,'R202','General Ward',4,'Available'),(13,'R203','Private Room',1,'Available'),(14,'R204','Private Room',1,'Available'),(15,'R205','VIP Suite',1,'Available'),(16,'R206','ICU',2,'Available'),(17,'R207','Pediatric Room',2,'Available'),(18,'R208','Pediatric Room',2,'Available'),(19,'R209','Isolation Room',1,'Available'),(20,'R210','Isolation Room',1,'Available'),(21,'R301','General Ward',4,'Available'),(22,'R302','General Ward',4,'Available'),(23,'R303','Private Room',1,'Available'),(24,'R304','Private Room',1,'Available'),(25,'R305','VIP Suite',1,'Available'),(26,'R306','CCU',2,'Available'),(27,'R307','CCU',2,'Available'),(28,'R308','Semi-Private',2,'Available'),(29,'R309','Semi-Private',2,'Available'),(30,'R310','Recovery Room',3,'Available'),(31,'R401','General Ward',4,'Available'),(32,'R402','General Ward',4,'Available'),(33,'R403','Private Room',1,'Available'),(34,'R404','Private Room',1,'Available'),(35,'R405','VIP Suite',1,'Available'),(36,'R406','NICU',2,'Available'),(37,'R407','NICU',2,'Available'),(38,'R408','Surgical Ward',3,'Available'),(39,'R409','Surgical Ward',3,'Available'),(40,'R410','Burn Unit',1,'Available'),(41,'R501','General Ward',4,'Available'),(42,'R502','General Ward',4,'Available'),(43,'R503','Private Room',1,'Available'),(44,'R504','Private Room',1,'Available'),(45,'R505','VIP Suite',1,'Available'),(46,'R506','Oncology Ward',2,'Available'),(47,'R507','Oncology Ward',2,'Available'),(48,'R508','Orthopedic Ward',3,'Available'),(49,'R509','Maternity Suite',1,'Available'),(50,'R510','Maternity Suite',1,'Available');
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-10-05 20:30:05
