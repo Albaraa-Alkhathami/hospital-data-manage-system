@@ -1,0 +1,81 @@
+-- =========================================
+-- 1. Composite Index
+-- =========================================
+
+CREATE INDEX idx_appointment_status_date
+ON appointment
+USING btree (status, appointment_date);
+
+
+SELECT
+    appointment_id,
+    patient_id,
+    doctor_id,
+    appointment_date,
+    status
+FROM appointment
+WHERE status = 'Scheduled'
+  AND appointment_date >= TIMESTAMP '2026-09-05 00:00:00'
+  AND appointment_date <  TIMESTAMP '2026-09-11 00:00:00'
+ORDER BY appointment_date;
+
+
+------------------------------------------------------------------------------------
+-- =========================================
+-- 2. Single-column B-tree Index
+-- =========================================
+CREATE INDEX idx_appointment_date_btree
+ON appointment
+USING btree (appointment_date);
+
+SELECT
+    appointment_id,
+    patient_id,
+    doctor_id,
+    appointment_date,
+    status
+FROM appointment
+WHERE appointment_date >= TIMESTAMP '2026-09-05 00:00:00'
+  AND appointment_date <  TIMESTAMP '2026-09-11 00:00:00'
+ORDER BY appointment_date;
+
+------------------------------------------------------------------------------------
+-- =========================================
+-- 3. Single-column Hash Index
+-- =========================================
+
+CREATE INDEX idx_doctor_specialization_hash
+ON doctor
+USING hash (specialization);
+
+SELECT
+    doctor_id,
+    name,
+    specialization,
+    phone,
+    status
+FROM doctor
+WHERE specialization = 'Immunologist'
+ORDER BY doctor_id;
+
+
+
+
+-----------------------------------------------------------------------------------------
+
+-- =========================================
+-- Verify the three indexes
+-- =========================================
+
+SELECT
+    tablename,
+    indexname,
+    indexdef
+FROM pg_indexes
+WHERE schemaname = 'public'
+  AND indexname IN (
+      'idx_appointment_status_date',
+      'idx_appointment_date_btree',
+      'idx_doctor_specialization_hash'
+  )
+ORDER BY indexname;
